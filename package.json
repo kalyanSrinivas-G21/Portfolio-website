@@ -1,0 +1,11 @@
+{
+  "name": "kalyan-portfolio-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix client run build",
+    "dev": "npm --prefix client run dev",
+    "start": "npm --prefix client run preview",
+    "preview": "npm --prefix client run preview"
+  }
+}
