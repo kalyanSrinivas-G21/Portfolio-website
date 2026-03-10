@@ -1,13 +1,468 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
+
 :root {
-  --bg-primary: #000000;
-  --text-primary: #f4f4f5;
-  color-scheme: dark;
+  --bg-canvas: #000000;
+  --bg-surface-1: #0c0c0e;
+  --bg-surface-2: #141417;
+  --bg-surface-3: #1a1a1f;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+
+  --ink-primary: #fafafa;
+  --ink-secondary: #a1a1aa;
+  --ink-muted: #71717a;
+
+  --dock-bg: rgba(18, 18, 22, 0.88);
+  --dock-border: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="light"],
+html.light {
+  --bg-canvas: #fafafa;
+  --bg-surface-1: #ffffff;
+  --bg-surface-2: #f4f4f5;
+  --bg-surface-3: #e4e4e7;
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.16);
+
+  --ink-primary: #09090b;
+  --ink-secondary: #52525b;
+  --ink-muted: #71717a;
+
+  --dock-bg: rgba(255, 255, 255, 0.86);
+  --dock-border: rgba(0, 0, 0, 0.10);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.font-pixel {
+  font-family: 'Silkscreen', monospace;
+  letter-spacing: 0.08em;
+}
+
+.font-pixel-thin {
+  font-family: 'DotGothic16', 'Geist Mono', monospace;
+  letter-spacing: 0.025em;
+  font-weight: 400;
+}
+
+.font-design {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.035em;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.font-heading {
+  font-family: 'Space Grotesk', 'DM Sans', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.font-mono {
+  font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* -------------------------------------------------------------
+   APPLE-STYLE BUTTONS (Tactile & Smooth for Dark & Light)
+   ------------------------------------------------------------- */
+.apple-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 1.1rem;
+  background-color: #1a1a1c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.apple-button:hover {
+  background-color: #222225;
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+    0 4px 10px 0 rgba(0, 0, 0, 0.6);
+  transform: translateY(-1px);
+}
+
+.apple-button:active {
+  transform: translateY(0.5px) scale(0.98);
+  background-color: #161618;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 1px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Apple Icon Squircle Badge */
+.apple-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 8px;
+  background-color: #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d4d4d8;
+  flex-shrink: 0;
+  transition: background-color 0.18s ease;
+}
+
+.apple-button:hover .apple-icon-badge {
+  background-color: #313136;
+  color: #ffffff;
+}
+
+/* -------------------------------------------------------------
+   APPLE-STYLE CARDS
+   ------------------------------------------------------------- */
+.apple-card {
+  position: relative;
+  background-color: #111113;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 8px 24px -4px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.apple-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: #151518;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    0 14px 32px -4px rgba(0, 0, 0, 0.7);
+}
+
+/* -------------------------------------------------------------
+   FLOATING DOCK
+   ------------------------------------------------------------- */
+.apple-dock {
+  background-color: var(--dock-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--dock-border);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    0 20px 48px -8px rgba(0, 0, 0, 0.7);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* -------------------------------------------------------------
+   DITHER & GRID
+   ------------------------------------------------------------- */
+.dither-banner {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.18) 1.5px, transparent 0);
+  background-size: 14px 14px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0) 100%);
+}
+
+.bg-column-grid {
+  background-size: 72px 100%;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px
+  );
+}
+
+/* -------------------------------------------------------------
+   LIGHT MODE COMPLETE RULES & COMPONENT OVERRIDES
+   ------------------------------------------------------------- */
+[data-theme="light"],
+html.light {
+  /* Buttons */
+  .apple-button {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.10);
+    color: #09090b;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 1),
+      0 1px 3px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .apple-button:hover {
+    background-color: #f4f4f5;
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 1),
+      0 4px 10px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .apple-button:active {
+    background-color: #e4e4e7;
+  }
+
+  .apple-icon-badge {
+    background-color: #f4f4f5;
+    border-color: rgba(0, 0, 0, 0.08);
+    color: #3f3f46;
+  }
+
+  .apple-button:hover .apple-icon-badge {
+    background-color: #e4e4e7;
+    color: #09090b;
+  }
+
+  /* Cards */
+  .apple-card {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.03),
+      0 8px 20px -4px rgba(0, 0, 0, 0.06);
+  }
+
+  .apple-card:hover {
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.16);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.04),
+      0 14px 28px -4px rgba(0, 0, 0, 0.09);
+  }
+
+  /* Form inputs & textareas */
+  input, textarea {
+    background-color: #ffffff !important;
+    color: #09090b !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #71717a !important;
+  }
+
+  input:focus,
+  textarea:focus {
+    background-color: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Submit button in form */
+  button[type="submit"] {
+    background-color: #18181b !important;
+    color: #ffffff !important;
+    border-color: #18181b !important;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #27272a !important;
+  }
+
+  button[type="submit"] span,
+  button[type="submit"] .text-white,
+  button[type="submit"] svg {
+    color: #ffffff !important;
+  }
+
+  /* Header gradient hairline */
+  .bg-gradient-to-r.from-white\/20 {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.04), transparent);
+  }
+
+  /* Dither dot & column grid */
+  .dither-banner {
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1.5px, transparent 0);
+  }
+
+  .bg-column-grid {
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.04) 1px,
+      transparent 1px
+    );
+  }
+
+  /* Custom minimal scrollbar in light mode */
+  ::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1aa;
+  }
+}
+
+/* -------------------------------------------------------------
+   SCROLLBAR & ANIMATIONS
+   ------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(14deg); }
+  80% { transform: rotate(-4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  display: inline-block;
+  animation: wave 1.8s infinite ease-in-out;
+}
+
+@keyframes dock-bounce {
+  0% { transform: translateY(0); }
+  40% { transform: translateY(-6px); }
+  70% { transform: translateY(1px); }
+  100% { transform: translateY(0); }
+}
+
+.dock-item-active {
+  animation: dock-bounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.pixel-fish-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.pixel-fish-canvas.interactive {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+/* Water Droplet / Liquid Glass Navbar */
+.liquid-droplet-dock {
+  background: rgba(18, 18, 23, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 20px 45px -10px rgba(0, 0, 0, 0.7),
+    0 0 20px 2px rgba(255, 255, 255, 0.05),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1.5px 1.5px 0 rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .liquid-droplet-dock,
+html.light .liquid-droplet-dock {
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 16px 36px -8px rgba(0, 0, 0, 0.12),
+    0 0 15px 1px rgba(0, 0, 0, 0.03),
+    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* -------------------------------------------------------------
+   VIEW TRANSITIONS API: CIRCULAR EXPANSION RIPPLE
+   ------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* -------------------------------------------------------------
+   SMOOTH SURFACE TRANSITIONS & MICRO-ANIMATIONS
+   ------------------------------------------------------------- */
+body,
+.apple-card,
+.apple-button,
+.liquid-droplet-dock,
+input,
+textarea {
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.25s ease,
+              box-shadow 0.35s ease;
+}
+
+@keyframes icon-pop {
+  0% {
+    transform: scale(0.65) rotate(-45deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15) rotate(8deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-icon-pop {
+  animation: icon-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
