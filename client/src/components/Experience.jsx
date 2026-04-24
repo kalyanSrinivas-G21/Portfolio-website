@@ -32,7 +32,7 @@ export default function Experience() {
           id: 'krify-backend',
           title: 'Backend & Systems Engineer',
           type: 'Full-time',
-          period: '04.2025 — 06.2025',
+          period: '04.2025 — 08.2025',
           duration: '5m',
           bullets: [
             'Architected and implemented high-throughput REST APIs using Java & Spring Boot with role-based access control.',
@@ -57,7 +57,7 @@ export default function Experience() {
           id: 'freelance-fullstack',
           title: 'Full Stack Engineer & AI Developer',
           type: 'Freelance',
-          period: '01.2024 — Present',
+          period: '10.2024 — Present',
           duration: '1y+',
           bullets: [
             'Designing and deploying end-to-end production web applications and AI workflows for international clients.',
