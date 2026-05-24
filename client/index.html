@@ -8,7 +8,45 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kalyan Srinivas — Developer Portfolio</title>
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Kalyan Srinivas — AI & Full Stack Engineer</title>
+    <meta name="description" content="Kalyan Srinivas Gurugubelli — AI & Backend Engineer with a Full Stack Developer at heart. Researching Computer Vision & NLP." />
+    <meta name="author" content="Kalyan Srinivas Gurugubelli" />
+
+    <!-- Open Graph / Social Sharing for Vercel -->
+    <meta property="og:title" content="Kalyan Srinivas — AI & Full Stack Engineer" />
+    <meta property="og:description" content="AI & Backend Engineer with a Full Stack Developer at heart. Researching Computer Vision & NLP." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/profile.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@OopaQuest" />
+    <meta name="twitter:creator" content="@OopaQuest" />
+    <meta name="twitter:title" content="Kalyan Srinivas — AI & Full Stack Engineer" />
+    <meta name="twitter:description" content="AI & Backend Engineer with a Full Stack Developer at heart. Researching Computer Vision & NLP." />
+    <meta name="twitter:image" content="/profile.jpg" />
+
+    <!-- Preload Critical Above-The-Fold Profile Asset (Zero Flash / CLS = 0) -->
+    <link rel="preload" as="image" href="/profile.jpg" fetchpriority="high" type="image/jpeg" />
+
+    <!-- Google Fonts with Preconnect & display=swap for high-performance rendering -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DotGothic16&family=Geist+Mono:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Inline Fast-Theme Script: Prevents Any Hydration Flash or White/Black Stutter -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('portfolio-theme');
+          var pref = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', pref);
+          document.documentElement.classList.add(pref);
+          document.documentElement.classList.remove(pref === 'dark' ? 'light' : 'dark');
+          document.documentElement.style.colorScheme = pref;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class="antialiased min-h-screen">
     <div id="root"></div>
