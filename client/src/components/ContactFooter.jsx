@@ -241,5 +241,3 @@ export default function ContactFooter() {
     </section>
   );
 }
-
-// Verified Cal.com booking modal integration and direct scheduling

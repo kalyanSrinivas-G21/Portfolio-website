@@ -81,5 +81,3 @@ export default function Education() {
     </section>
   );
 }
-
-// Verified compact syllabus ledger layout

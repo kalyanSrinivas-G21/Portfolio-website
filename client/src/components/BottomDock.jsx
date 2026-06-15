@@ -249,5 +249,3 @@ export default function BottomDock({
     </nav>
   );
 }
-
-// Optimized dock magnification spring curves

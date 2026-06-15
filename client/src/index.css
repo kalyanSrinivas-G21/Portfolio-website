@@ -466,5 +466,3 @@ textarea {
 .animate-fadeInUp {
   animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
-/* Production verified design system tokens */
